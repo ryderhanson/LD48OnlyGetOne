@@ -32,7 +32,7 @@ public class StackableBlocks : MonoBehaviour {
 		{
 
 		}*/
-		if(collision.relativeVelocity.magnitude > 2)
+		if(collision.relativeVelocity.magnitude > 1.5)
 		{
 			Instantiate(pSystem, transform.position, transform.rotation);
 
