@@ -9,6 +9,7 @@ public class GunControlScript : MonoBehaviour
 
 	private bool _hasFired = false;
 
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -19,11 +20,11 @@ public class GunControlScript : MonoBehaviour
 	{
 		if(Input.GetMouseButtonDown(0))
 		{
-			if(_hasFired == false)
-			{
+			//if(_hasFired == false)
+			//{
 				Fire();
-				_hasFired = true;
-			}
+				//_hasFired = true;
+			//}
 		}
 		else
 		{
@@ -41,7 +42,12 @@ public class GunControlScript : MonoBehaviour
 		GameObject hitObject = FindRaycastedObject();
 		if(hitObject != null)
 		{
-			hitObject.BroadcastMessage("HitByGun", SendMessageOptions.DontRequireReceiver);
+			if(_hasFired == false)
+			{
+				GetComponent<AudioSource>().Play();
+				hitObject.BroadcastMessage("HitByGun", SendMessageOptions.DontRequireReceiver);
+				_hasFired = true;
+			}
 		}
 	}
 
@@ -52,6 +58,8 @@ public class GunControlScript : MonoBehaviour
 		{
 			hitObject.BroadcastMessage("AimedAt", SendMessageOptions.DontRequireReceiver);
 		}
+
+
 	}
 
 	GameObject FindRaycastedObject()

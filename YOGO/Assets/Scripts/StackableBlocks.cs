@@ -3,6 +3,8 @@ using System.Collections;
 
 public class StackableBlocks : MonoBehaviour {
 
+	public GameObject pSystem;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -32,6 +34,8 @@ public class StackableBlocks : MonoBehaviour {
 		}*/
 		if(collision.relativeVelocity.magnitude > 2)
 		{
+			Instantiate(pSystem, transform.position, transform.rotation);
+
 			Destroy(gameObject);
 
 			//reset it on collision in the case of multiple cascading objects

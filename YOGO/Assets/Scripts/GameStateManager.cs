@@ -13,6 +13,8 @@ public class GameStateManager : MonoBehaviour
 
 	private static int numBlocksBroken = 0;
 
+	public static int currentLevel = 1;
+
 	void Awake()
 	{
 		//DontDestroyOnLoad(gameObject);
@@ -49,17 +51,36 @@ public class GameStateManager : MonoBehaviour
 	{
 		if(roundOver)
 		{
-			GUI.TextArea( new Rect(Screen.width / 2.0f - 20.0f, Screen.height / 2.0f - 80.0f, 120.0f, 40.0f ), "Game Over. You scored " + numBlocksBroken);
+			if(currentLevel >= 3)
+			{
+				GUI.TextArea( new Rect(Screen.width / 2.0f - 20.0f, Screen.height / 2.0f - 80.0f, 120.0f, 40.0f ), "Game Over. You scored " + numBlocksBroken);
+
+				if(GUI.Button( new Rect(Screen.width / 2.0f + 80.0f, Screen.height / 2.0f, 80.0f, 40.0f ), "Quit"))
+				{
+					Application.Quit();
+				}
+			}
+			else
+			{
+				GUI.TextArea( new Rect(Screen.width / 2.0f - 20.0f, Screen.height / 2.0f - 80.0f, 120.0f, 40.0f ), "Round Over. You scored " + numBlocksBroken);
+
+				if(GUI.Button( new Rect(Screen.width / 2.0f + 80.0f, Screen.height / 2.0f, 80.0f, 40.0f ), "Next Level"))
+				{
+					roundOver = false;
+					countingDown = false;
+					currentTime = 0.0f;
+					++currentLevel;
+					Application.LoadLevel(currentLevel);
+				}
+			}
 
 			if(GUI.Button( new Rect(Screen.width / 2.0f - 80.0f, Screen.height / 2.0f, 80.0f, 40.0f ), "Retry"))
 			{
 				roundOver = false;
+				countingDown = false;
+				currentTime = 0.0f;
 				numBlocksBroken = 0;
-				Application.LoadLevel("MainScene");
-			}
-			if(GUI.Button( new Rect(Screen.width / 2.0f + 80.0f, Screen.height / 2.0f, 80.0f, 40.0f ), "Quit"))
-			{
-				Application.Quit();
+				Application.LoadLevel(currentLevel);
 			}
 		}
 	}
